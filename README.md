@@ -1,2 +1,2 @@
 # Thesis-BIM-Mobile
-Bill and Invoice Manager mobile application
+Bill and Invoice Manager mobile
