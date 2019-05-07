@@ -1,35 +1,43 @@
-package host.exp.exponent;
-
 import android.os.Bundle;
+import android.annotation.TargetApi;
+import android.os.Build;
+import android.support.annotation.Nullable;
 
 import com.facebook.react.ReactPackage;
+import com.facebook.react.modules.core.PermissionAwareActivity;
+import com.facebook.react.modules.core.PermissionListener;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-import expo.core.interfaces.Package;
-import host.exp.exponent.generated.DetachBuildConstants;
-import host.exp.exponent.experience.DetachActivity;
+import com.thehelperbees.helperhive.generated.ExponentBuildConstants;
+import host.exp.expoview.ExponentActivity;
 
-public class MainActivity extends DetachActivity {
+//public class MainActivity extends ExponentActivity {
+// Original class def ----^
+public class MainActivity extends ExponentActivity implements PermissionAwareActivity {
+
+  @Nullable private PermissionListener mPermissionListener;
 
   @Override
   public String publishedUrl() {
-    return "exp://exp.host/@fixxxarn/Thesis-BIM-Mobile";
+    return "exp://exp.host/@timothykrell/helper-hive";
   }
 
   @Override
   public String developmentUrl() {
-    return DetachBuildConstants.DEVELOPMENT_URL;
+    return ExponentBuildConstants.DEVELOPMENT_URL;
+  }
+
+  @Override
+  public List<String> sdkVersions() {
+    return new ArrayList<>(Arrays.asList("21.0.0"));
   }
 
   @Override
   public List<ReactPackage> reactPackages() {
     return ((MainApplication) getApplication()).getPackages();
-  }
-
-  @Override
-  public List<Package> expoPackages() {
-    return ((MainApplication) getApplication()).getExpoPackages();
   }
 
   @Override
@@ -42,4 +50,20 @@ public class MainActivity extends DetachActivity {
     // Add extra initialProps here
     return expBundle;
   }
+
+
+  // Allow using PermissionsAndroid in react-native-background-location library
+    // Didn't work with Expo. See https://github.com/expo/expo/issues/784
+    // Copied solution from https://github.com/wix/react-native-navigation/pull/470/files
+    @TargetApi(Build.VERSION_CODES.M)
+    public void requestPermissions(String[] permissions, int requestCode, PermissionListener listener) {
+        mPermissionListener = listener;
+        requestPermissions(permissions, requestCode);
+    }
+
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (mPermissionListener != null && mPermissionListener.onRequestPermissionsResult(requestCode, permissions, grantResults)) {
+            mPermissionListener = null;
+        }
+    }
 }
