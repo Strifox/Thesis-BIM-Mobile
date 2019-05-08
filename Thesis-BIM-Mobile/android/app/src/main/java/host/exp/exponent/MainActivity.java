@@ -7,6 +7,10 @@ import com.facebook.react.ReactPackage;
 import com.facebook.react.modules.core.PermissionAwareActivity;
 import com.facebook.react.modules.core.PermissionListener;
 
+import com.facebook.react.ReactActivityDelegate;
+import com.facebook.react.ReactRootView;
+import com.swmansion.gesturehandler.react.RNGestureHandlerEnabledRootView;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -49,6 +53,16 @@ public class MainActivity extends ExponentActivity implements PermissionAwareAct
   public Bundle initialProps(Bundle expBundle) {
     // Add extra initialProps here
     return expBundle;
+  }
+
+  @Override
+  protected ReactActivityDelegate createReactActivityDelegate() {
+    return new ReactActivityDelegate(this, getMainComponentName()) {
+      @Override
+      protected ReactRootView createRootView() {
+        return new RNGestureHandlerEnabledRootView(MainActivity.this);
+      }
+    };
   }
 
 
