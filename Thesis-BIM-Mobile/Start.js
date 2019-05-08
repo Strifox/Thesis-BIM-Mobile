@@ -6,8 +6,11 @@ export default class Start extends React.Component {
   render() {
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+        <Text>Welcome to BIM!</Text>
+        <Text>Never forget your payments again!</Text>
         <TouchableOpacity style={styles.button} onPress={() => {this.props.navigation.navigate('Login')}}><Text style={styles.buttonText}> Login</Text></TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={() => {this.props.navigation.navigate('Register')}}><Text style={styles.buttonText}> Register</Text></TouchableOpacity>
+        <TouchableOpacity style={[styles.button, {marginTop: 50}]} onPress={() => {this.props.navigation.navigate('Invoice')}}><Text style={styles.buttonText}> Dev / Invoice</Text></TouchableOpacity>
       </View>
     );
   }

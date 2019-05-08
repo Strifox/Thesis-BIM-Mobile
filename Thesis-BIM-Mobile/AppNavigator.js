@@ -4,20 +4,24 @@ import StartScreen from './Start';
 import CameraScreen from './Camera'; 
 import LoginScreen from './Login';
 import RegisterScreen from './Register';
+import InvoiceScreen from './Invoice';
 
 const AppNavigator = createStackNavigator({
     Home: {
         screen: StartScreen
-    },
-    Camera: {
-        screen: CameraScreen
     },
     Login: {
         screen: LoginScreen
     },
     Register: {
         screen: RegisterScreen
-    }
+    },
+    Invoice: {
+        screen: InvoiceScreen
+    },   
+    Camera: {
+        screen: CameraScreen
+    },
 },
 {
   initialRouteName: 'Home',

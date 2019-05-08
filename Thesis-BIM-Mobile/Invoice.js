@@ -18,7 +18,7 @@ export default class Invoice extends React.Component {
           <Text>Paydate:</Text>
           <TextInput style={styles.textInput}></TextInput>
           <View style={{flexDirection: 'row'}}>
-              <TouchableOpacity style={[styles.button, {marginRight: 5}]} onPress={() => {this.props.navigation.navigate('Camera')}}><View style={{flexDirection: 'row'}}><Icon name='camera' size={20} color='white'/><Text style={styles.buttonText}> Scan</Text></View></TouchableOpacity>
+              <TouchableOpacity style={[styles.button, {marginRight: 5}]} onPress={() => {this.props.navigation.navigate('Camera')}}><View style={{flexDirection: 'row'}}><Icon name='camera-retro' size={20} color='white'/><Text style={styles.buttonText}> Scan</Text></View></TouchableOpacity>
               <TouchableOpacity style={[styles.button, {marginLeft: 5}]} onPress={() => {}}><View style={{flexDirection: 'row'}}><Icon name='save' size={22} color='white' /><Text style={styles.buttonText}> Save</Text></View></TouchableOpacity>
           </View>
         </View>
