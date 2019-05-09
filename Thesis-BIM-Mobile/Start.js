@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import Style from './Style';
 
 export default class Start extends React.Component {
   render() {
@@ -8,43 +9,10 @@ export default class Start extends React.Component {
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
         <Text>Welcome to BIM!</Text>
         <Text>Never forget your payments again!</Text>
-        <TouchableOpacity style={styles.button} onPress={() => {this.props.navigation.navigate('Login')}}><Text style={styles.buttonText}> Login</Text></TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={() => {this.props.navigation.navigate('Register')}}><Text style={styles.buttonText}> Register</Text></TouchableOpacity>
-        <TouchableOpacity style={[styles.button, {marginTop: 50}]} onPress={() => {this.props.navigation.navigate('Invoice')}}><Text style={styles.buttonText}> Dev / Invoice</Text></TouchableOpacity>
+        <TouchableOpacity style={Style.startButton} onPress={() => {this.props.navigation.navigate('Login')}}><Text style={Style.buttonText}> Login</Text></TouchableOpacity>
+        <TouchableOpacity style={Style.startButton} onPress={() => {this.props.navigation.navigate('Register')}}><Text style={Style.buttonText}> Register</Text></TouchableOpacity>
+        <TouchableOpacity style={[Style.startButton, {marginTop: 50}]} onPress={() => {this.props.navigation.navigate('Invoice')}}><Text style={Style.buttonText}> Dev / Invoice</Text></TouchableOpacity>
       </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  textInput: {
-    borderWidth: 1,
-    borderColor: '#000',
-    borderRadius: 7,
-    height: 30,
-    paddingLeft: 5,
-  },
-  form: {
-    width: 80 + '%',
-    textAlign: 'left',
-  },
-  button: {
-    borderRadius: 7,
-    marginTop: 10,
-    backgroundColor: 'black',
-    height: 30,
-    width: 50 + '%',
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  buttonText: {
-    color: 'white',
-    fontSize: 16,
-  }
-});
