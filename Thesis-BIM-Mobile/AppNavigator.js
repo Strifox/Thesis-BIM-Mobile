@@ -5,9 +5,10 @@ import CameraScreen from './Camera';
 import LoginScreen from './Login';
 import RegisterScreen from './Register';
 import InvoiceScreen from './Invoice';
+import HomeScreen from './Home';
 
 const AppNavigator = createStackNavigator({
-    Home: {
+    Start: {
         screen: StartScreen
     },
     Login: {
@@ -22,9 +23,12 @@ const AppNavigator = createStackNavigator({
     Camera: {
         screen: CameraScreen
     },
+    Home: {
+        screen: HomeScreen
+    }
 },
 {
-  initialRouteName: 'Home',
+  initialRouteName: 'Start',
   headerMode: 'none',
   transitionConfig : () => ({
     transitionSpec: {
