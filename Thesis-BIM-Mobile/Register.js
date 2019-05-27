@@ -10,13 +10,30 @@ export default class Register extends React.Component {
       email: '',
       username: '',
       password: '',
-      confirmedPassword: ''
+      confirmedPassword: '',
+      errorMessage: '',
     };
   }
 
+  validateEmail = (email) => {
+    if(email.match(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
+      return true;
+    }
+    return false;
+  }
+
   Register() {
-    if(this.state.password === this.state.confirmedPassword) {
-      fetch('https://thesis-bim-backend.azurewebsites.net/api/User/Register', {
+    if(this.state.password !== this.state.confirmedPassword) {
+      this.setState({ errorMessage: 'The specified passwords do not match.' });
+      return;
+    }
+    else if(!this.validateEmail(this.state.email)){
+      this.setState({ errorMessage: 'The email is invalid.' });
+      return;
+    }
+    else {
+      this.setState({ errorMessage: '' })
+      fetch('https://thesis-bim-backend.azurewebsites.net/api/UserApi/Register', {
         method: 'POST',
         headers: {
           'Content-Type': 'Application/JSON'
@@ -27,7 +44,8 @@ export default class Register extends React.Component {
           password: this.state.password,
           expoPushToken: '0'
         })
-      });
+      })
+      .then(response => this.setState({ errorMessage: JSON.stringify(response) }))
     }
   }
 
@@ -48,6 +66,7 @@ export default class Register extends React.Component {
                     <TouchableOpacity style={[Style.button, {marginLeft: 5}]} onPress={() => {this.Register()}}><Text style={Style.buttonText}> Register</Text></TouchableOpacity>
                 </View>
             </View>
+            <Text style={{ fontWeight: 'bold', fontSize: 16, color: 'red', marginTop: 10, textAlign: 'center', width: 80 + '%'}}>{this.state.errorMessage}</Text>
         </View>
     );
   }

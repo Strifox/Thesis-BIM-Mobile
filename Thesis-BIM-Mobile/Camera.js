@@ -55,7 +55,14 @@ export default class App extends React.Component {
 
   snap = async () => {
     let photo = await this.camera.takePictureAsync();
-    CameraRoll.saveToCameraRoll(photo.uri, 'photo');
+    this.props.navigation.navigate('Invoice', {
+      Company: 'Inteleon AB',
+      Bankgiro: '170-3453',
+      OCR: 11880906711,
+      Amount: 95,
+      Paydate: '2019-04-30'
+    });
+    //CameraRoll.saveToCameraRoll(photo.uri, 'photo');
   };
 
   render() {

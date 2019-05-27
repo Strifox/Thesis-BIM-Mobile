@@ -8,8 +8,8 @@ export default class Home extends React.Component {
   render() {
     return (
         <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-            <Text>Home</Text>
-            <TouchableOpacity style={[Style.startButton, {marginTop: 50}]} onPress={() => {this.props.navigation.navigate('Invoice')}}><Text style={Style.buttonText}>Add Invoice</Text></TouchableOpacity>
+            <TouchableOpacity style={[Style.startButton, {marginTop: 50}]} onPress={() => {this.props.navigation.navigate('Invoice')}}><Text style={Style.buttonText}>Add New Invoice</Text></TouchableOpacity>
+            <TouchableOpacity style={[Style.startButton, {marginTop: 10}]} onPress={() => {this.props.navigation.navigate('Invoices')}}><Text style={Style.buttonText}>View Invoices</Text></TouchableOpacity>
         </View>
     );
   }

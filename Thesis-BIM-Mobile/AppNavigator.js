@@ -5,6 +5,7 @@ import CameraScreen from './Camera';
 import LoginScreen from './Login';
 import RegisterScreen from './Register';
 import InvoiceScreen from './Invoice';
+import InvoicesScreen from './Invoices';
 import HomeScreen from './Home';
 
 const AppNavigator = createStackNavigator({
@@ -19,7 +20,10 @@ const AppNavigator = createStackNavigator({
     },
     Invoice: {
         screen: InvoiceScreen
-    },   
+    },
+    Invoices: {
+        screen: InvoicesScreen
+    },    
     Camera: {
         screen: CameraScreen
     },
