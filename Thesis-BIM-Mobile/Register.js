@@ -11,7 +11,7 @@ export default class Register extends React.Component {
       username: '',
       password: '',
       confirmedPassword: '',
-      errorMessage: '',
+      errorMessage: ' ',
     };
   }
 
@@ -66,7 +66,7 @@ export default class Register extends React.Component {
                     <TouchableOpacity style={[Style.button, {marginLeft: 5}]} onPress={() => {this.Register()}}><Text style={Style.buttonText}> Register</Text></TouchableOpacity>
                 </View>
             </View>
-            <Text style={{ fontWeight: 'bold', fontSize: 16, color: 'red', marginTop: 10, textAlign: 'center', width: 80 + '%'}}>{this.state.errorMessage}</Text>
+            <Text style={{ fontSize: 14, color: 'red', marginTop: 10 }}>{this.state.errorMessage}</Text>
         </View>
     );
   }
