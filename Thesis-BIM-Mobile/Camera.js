@@ -43,6 +43,7 @@ export default class App extends React.Component {
       hasCameraRollPermission: null,
       type: Camera.Constants.Type.back,
       base64: null,
+      result: null,
     }
   };
 
@@ -60,9 +61,26 @@ export default class App extends React.Component {
   snap = async () => {
     let photo = await this.camera.takePictureAsync({
       base64: true,
-    }).then(data => {
+    })
+    .then(data => {
       this.setState({ base64: data.base64 })
     });
+
+    fetch('https://thesis-bim-backend.azurewebsites.net/api/InvoicesApi/AnalyzeImage', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'Application/JSON'
+        },
+        body: JSON.stringify({
+          Base64String: this.state.base64
+        })
+    })
+    .then((response) => response.json())
+    .then((responseJson) => {
+      this.setState({ result: responseJson.Ocr })
+    })
+
+    console.log(this.state.base64);
 
     this.props.navigation.navigate('Invoice', {
       Company: 'Inteleon AB',
@@ -83,7 +101,7 @@ export default class App extends React.Component {
     } else {
       return (
         <View style={{ flex: 1 }}>
-          <Camera ref={ref => { this.camera = ref; }} style={{ flex: 1 }} type={this.state.type} ratio='16:9'>
+          <Camera ref={ref => { this.camera = ref; }} style={{ flex: 1 }} type={this.state.type} ratio='16:9' pictureSize='15'>
             <View
               style={{
                 flex: 1,
