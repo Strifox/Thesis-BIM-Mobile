@@ -36,10 +36,14 @@ async function requestCameraRollPermission() {
 }
 
 export default class App extends React.Component {
-  state = {
-    hasCameraPermission: null,
-    hasCameraRollPermission: null,
-    type: Camera.Constants.Type.back,
+  constructor(props) {
+    super(props);
+    this.state = {
+      hasCameraPermission: null,
+      hasCameraRollPermission: null,
+      type: Camera.Constants.Type.back,
+      base64: null,
+    }
   };
 
   async componentDidMount() {
@@ -54,7 +58,12 @@ export default class App extends React.Component {
   }
 
   snap = async () => {
-    let photo = await this.camera.takePictureAsync();
+    let photo = await this.camera.takePictureAsync({
+      base64: true,
+    }).then(data => {
+      this.setState({ base64: data.base64 })
+    });
+
     this.props.navigation.navigate('Invoice', {
       Company: 'Inteleon AB',
       Bankgiro: '170-3453',
