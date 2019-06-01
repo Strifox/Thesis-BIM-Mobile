@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity, CameraRoll, StatusBar } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { RNCamera } from 'react-native-camera';
-import { Camera, Permissions, Constants } from 'expo';
+import { Camera, Permissions, Constants, ImageManipulator, FileSystem } from 'expo';
 import { PermissionsAndroid } from 'react-native';
 
 async function requestCameraPermission() {
@@ -43,7 +43,11 @@ export default class App extends React.Component {
       hasCameraRollPermission: null,
       type: Camera.Constants.Type.back,
       base64: null,
-      result: null,
+      companyName: null,
+      bankAccountNumber: null,
+      ocr: null,
+      amountToPay: null,
+      paydate: null
     }
   };
 
@@ -59,12 +63,14 @@ export default class App extends React.Component {
   }
 
   snap = async () => {
-    let photo = await this.camera.takePictureAsync({
-      base64: true,
-    })
-    .then(data => {
-      this.setState({ base64: data.base64 })
-    });
+    let photo = await this.camera.takePictureAsync();
+    console.log("Took photo")
+    let maniPhoto = await ImageManipulator.manipulateAsync(photo.uri, [{ resize: { width: 1080, height: 1920 }}, { format: 'png' }]);
+    console.log("Mani photo")
+    let imageInBase64 = await FileSystem.readAsStringAsync(maniPhoto.uri, { encoding: FileSystem.EncodingTypes.Base64 });
+    console.log("Encoded photo")
+
+    this.setState({ base64: imageInBase64 });
 
     fetch('https://thesis-bim-backend.azurewebsites.net/api/InvoicesApi/AnalyzeImage', {
         method: 'POST',
@@ -75,20 +81,26 @@ export default class App extends React.Component {
           Base64String: this.state.base64
         })
     })
-    .then((response) => response.json())
-    .then((responseJson) => {
-      this.setState({ result: responseJson.Ocr })
+    .then((response) =>  {
+      return response.json();
     })
+    .then((responseJson) => {
+      this.setState({
+        companyName: responseJson.companyName,
+        bankAccountNumber: responseJson.bankAccountNumber,
+        ocr: responseJson.ocr,
+        amountToPay: responseJson.amountToPay,
+        paydate: responseJson.paydate.slice(0, 10)
+      })
 
-    console.log(this.state.base64);
-
-    this.props.navigation.navigate('Invoice', {
-      Company: 'Inteleon AB',
-      Bankgiro: '170-3453',
-      OCR: 11880906711,
-      Amount: 95,
-      Paydate: '2019-04-30'
-    });
+      this.props.navigation.navigate('Invoice', {
+        Company: this.state.companyName,
+        Bankgiro: this.state.bankAccountNumber,
+        OCR: this.state.ocr,
+        Amount: this.state.amountToPay,
+        Paydate: this.state.paydate
+      });
+    })
     //CameraRoll.saveToCameraRoll(photo.uri, 'photo');
   };
 
