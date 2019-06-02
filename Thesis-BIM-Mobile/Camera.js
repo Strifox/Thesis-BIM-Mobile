@@ -65,7 +65,7 @@ export default class App extends React.Component {
   snap = async () => {
     let photo = await this.camera.takePictureAsync();
     console.log("Took photo")
-    let maniPhoto = await ImageManipulator.manipulateAsync(photo.uri, [{ resize: { width: 1080, height: 1920 }}, { format: 'png' }]);
+    let maniPhoto = await ImageManipulator.manipulateAsync(photo.uri, [{ resize: { width: 1080, height: 1920 }}, { format: 'jpg' }]);
     console.log("Mani photo")
     let imageInBase64 = await FileSystem.readAsStringAsync(maniPhoto.uri, { encoding: FileSystem.EncodingTypes.Base64 });
     console.log("Encoded photo")
@@ -113,7 +113,7 @@ export default class App extends React.Component {
     } else {
       return (
         <View style={{ flex: 1 }}>
-          <Camera ref={ref => { this.camera = ref; }} style={{ flex: 1 }} type={this.state.type} ratio='16:9' pictureSize='15'>
+          <Camera ref={ref => { this.camera = ref; }} style={{ flex: 1 }} type={this.state.type} ratio='16:9'>
             <View
               style={{
                 flex: 1,

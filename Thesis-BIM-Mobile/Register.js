@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, ImageBackground } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Style from './Style';
 
@@ -51,6 +51,8 @@ export default class Register extends React.Component {
 
   render() {
     return (
+      <View style={{ flex: 1}}>
+        <ImageBackground source={require('./assets/startImage.jpg')} style={{ flex: 1, width: 100 + '%', height: 300 }}>
         <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
             <View style={Style.form}>
                 <Text>Email:</Text>
@@ -68,6 +70,8 @@ export default class Register extends React.Component {
             </View>
             <Text style={{ fontSize: 14, color: 'red', marginTop: 10 }}>{this.state.errorMessage}</Text>
         </View>
+        </ImageBackground>
+      </View>
     );
   }
 }

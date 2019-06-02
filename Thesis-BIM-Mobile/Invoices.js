@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, AsyncStorage } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Style from './Style';
 import { ScrollView } from "react-native-gesture-handler";
@@ -7,6 +7,28 @@ import { ScrollView } from "react-native-gesture-handler";
 //Fetch funktion för alla invoices på den specifika inloggade användaren
 
 export default class Invoice extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      userId: ''
+    }
+  }
+
+  RetrieveLocalStorage = async () => {
+    try {
+      let userId = await AsyncStorage.getItem('userId')
+      this.setState({ userId : userId })
+      console.log(this.state.userId);
+    }
+    catch(error) {
+      console.log(error);
+    }
+  }
+
+  componentDidMount() {
+    this.RetrieveLocalStorage();
+  }
+
   render() {
     return (
       <ScrollView style={{ flex: 1 }}>
