@@ -45,7 +45,7 @@ export default class Register extends React.Component {
           expoPushToken: '0'
         })
       })
-      .then(response => this.setState({ errorMessage: JSON.stringify(response) }))
+      this.props.navigation.navigate('Start')
     }
   }
 

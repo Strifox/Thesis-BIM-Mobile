@@ -30,17 +30,23 @@ export default class Start extends React.Component {
     .then((response) => {
       if(response.status !== 200) {
         this.setState({ errorMessage: 'Invalid password or username.' })
-        return;
+        return null;
       }
-      this.setState({ errorMessage: ' ' })
-      return response.text();
+      else {
+        this.setState({ errorMessage: ' ' })
+        return response.text();
+      }
     })
     .then((responseJson) => {
-      var decodedJwt = jwtDecode(responseJson);
-      console.log(decodedJwt.userId);
-
-      let userId = decodedJwt.userId;
-      AsyncStorage.setItem('userId', userId);
+      if(responseJson !== null) {
+        var decodedJwt = jwtDecode(responseJson);
+        console.log(decodedJwt.userId);
+  
+        let userId = decodedJwt.userId;
+        AsyncStorage.setItem('userId', userId);
+  
+        this.props.navigation.navigate('Home');
+      }
     });
   }
 
