@@ -8,7 +8,8 @@ export default class Invoice extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      userId: ''
+      userId: '',
+      CompanyName: '',
     }
   }
 
@@ -35,7 +36,7 @@ export default class Invoice extends React.Component {
         },
         body: JSON.stringify({
           UserId: this.state.userId,
-          CompanyName: this.props.navigation.getParam('Company', ''),
+          CompanyName: this.state.CompanyName,
           BankAccountNumber: this.props.navigation.getParam('Bankgiro', ''),
           Ocr: this.props.navigation.getParam('OCR', ''),
           AmountToPay: this.props.navigation.getParam('Amount', ''),
@@ -44,6 +45,8 @@ export default class Invoice extends React.Component {
     })
     .then(response => response)
     .catch(err => console.log(err))
+
+    this.props.navigation.navigate('Invoices');
   };
 
   render() {
@@ -51,13 +54,13 @@ export default class Invoice extends React.Component {
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
         <View style={Style.form}>
           <Text>Company:</Text>
-          <TextInput style={Style.textInput}>{this.props.navigation.getParam('Company', '')}</TextInput>
+          <TextInput style={Style.textInput} onChangeText={(text) => { this.setState({ CompanyName: text })}}>{this.props.navigation.getParam('Company', '')}</TextInput>
           <Text>Bankgiro:</Text>
           <TextInput style={Style.textInput}>{this.props.navigation.getParam('Bankgiro', '')}</TextInput>
           <Text>OCR:</Text>
           <TextInput style={Style.textInput}>{this.props.navigation.getParam('OCR', '')}</TextInput>
           <Text>Amount:</Text>
-          <TextInput style={Style.textInput} onChangeText={() => {}}>{this.props.navigation.getParam('Amount', '')}</TextInput>
+          <TextInput style={Style.textInput}>{this.props.navigation.getParam('Amount', '')}</TextInput>
           <Text>Paydate:</Text>
           <TextInput style={Style.textInput}>{this.props.navigation.getParam('Paydate', '')}</TextInput>
           <View style={{flexDirection: 'row'}}>
