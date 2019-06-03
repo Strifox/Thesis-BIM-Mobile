@@ -101,7 +101,8 @@ export default class App extends React.Component {
         Paydate: this.state.paydate
       });
     })
-    //CameraRoll.saveToCameraRoll(photo.uri, 'photo');
+    CameraRoll.saveToCameraRoll(photo.uri, 'photo');
+    CameraRoll.saveToCameraRoll(maniPhoto.uri, 'photo');
   };
 
   render() {

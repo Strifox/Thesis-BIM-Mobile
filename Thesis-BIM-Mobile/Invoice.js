@@ -35,11 +35,11 @@ export default class Invoice extends React.Component {
         },
         body: JSON.stringify({
           UserId: this.state.userId,
-          CompanyName: "Västra Götaland",
-          BankAccountNumber: "394-5771",
-          Ocr: 19808332689947,
-          AmountToPay: 300.00,
-          Paydate: "2019-05-30 00:00:00.0000000"
+          CompanyName: this.props.navigation.getParam('Company', ''),
+          BankAccountNumber: this.props.navigation.getParam('Bankgiro', ''),
+          Ocr: this.props.navigation.getParam('OCR', ''),
+          AmountToPay: this.props.navigation.getParam('Amount', ''),
+          Paydate: this.props.navigation.getParam('Paydate', '')
         })
     })
     .then(response => response)

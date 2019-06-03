@@ -25,8 +25,20 @@ export default class Invoice extends React.Component {
     }
   }
 
+  GetAllInvoices = async () => {
+    fetch('https://thesis-bim-backend.azurewebsites.net/api/InvoicesApi/GetInvoices?userId=f6cc6f56-e38a-4e35-82a3-6f329c9b7735', {
+        method: 'GET'
+    })
+    .then((response) => {
+      response.text();
+    })
+    .then((responseJson) => console.log(responseJson))
+    .catch(err => console.log(err))
+  };
+
   componentDidMount() {
     this.RetrieveLocalStorage();
+    this.GetAllInvoices();
   }
 
   render() {
