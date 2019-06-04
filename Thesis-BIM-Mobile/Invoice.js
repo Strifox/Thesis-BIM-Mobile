@@ -10,6 +10,10 @@ export default class Invoice extends React.Component {
     this.state = {
       userId: '',
       CompanyName: '',
+      BankAccountNumber: '',
+      Ocr: '',
+      AmountToPay: '',
+      Paydate: '',
     }
   }
 
@@ -26,6 +30,13 @@ export default class Invoice extends React.Component {
 
   componentDidMount() {
     this.RetrieveLocalStorage();
+    this.setState({
+      CompanyName: this.props.navigation.getParam('Company', ''),
+      BankAccountNumber: this.props.navigation.getParam('Bankgiro', ''),
+      Ocr: this.props.navigation.getParam('OCR', ''),
+      AmountToPay: this.props.navigation.getParam('Amount', ''),
+      Paydate: this.props.navigation.getParam('Paydate', '')
+    })
   }
   
   SaveInvoice = async () => {
@@ -37,10 +48,10 @@ export default class Invoice extends React.Component {
         body: JSON.stringify({
           UserId: this.state.userId,
           CompanyName: this.state.CompanyName,
-          BankAccountNumber: this.props.navigation.getParam('Bankgiro', ''),
-          Ocr: this.props.navigation.getParam('OCR', ''),
-          AmountToPay: this.props.navigation.getParam('Amount', ''),
-          Paydate: this.props.navigation.getParam('Paydate', '')
+          BankAccountNumber: this.state.BankAccountNumber,
+          Ocr: this.state.Ocr,
+          AmountToPay: this.state.AmountToPay,
+          Paydate: this.state.Paydate
         })
     })
     .then(response => response)
@@ -56,13 +67,13 @@ export default class Invoice extends React.Component {
           <Text>Company:</Text>
           <TextInput style={Style.textInput} onChangeText={(text) => { this.setState({ CompanyName: text })}}>{this.props.navigation.getParam('Company', '')}</TextInput>
           <Text>Bankgiro:</Text>
-          <TextInput style={Style.textInput}>{this.props.navigation.getParam('Bankgiro', '')}</TextInput>
+          <TextInput style={Style.textInput} onChangeText={(text) => { this.setState({ BankAccountNumber: text })}}>{this.props.navigation.getParam('Bankgiro', '')}</TextInput>
           <Text>OCR:</Text>
-          <TextInput style={Style.textInput}>{this.props.navigation.getParam('OCR', '')}</TextInput>
+          <TextInput style={Style.textInput} onChangeText={(text) => { this.setState({ Ocr: text })}}>{this.props.navigation.getParam('OCR', '')}</TextInput>
           <Text>Amount:</Text>
-          <TextInput style={Style.textInput}>{this.props.navigation.getParam('Amount', '')}</TextInput>
+          <TextInput style={Style.textInput} onChangeText={(text) => { this.setState({ AmountToPay: text })}}>{this.props.navigation.getParam('Amount', '')}</TextInput>
           <Text>Paydate:</Text>
-          <TextInput style={Style.textInput}>{this.props.navigation.getParam('Paydate', '')}</TextInput>
+          <TextInput style={Style.textInput} onChangeText={(text) => { this.setState({ Paydate: text })}}>{this.props.navigation.getParam('Paydate', '')}</TextInput>
           <View style={{flexDirection: 'row'}}>
               <TouchableOpacity style={[Style.button, {marginRight: 5}]} onPress={() => {this.props.navigation.navigate('Camera')}}><View style={{flexDirection: 'row'}}><Icon name='camera-retro' size={20} color='white'/><Text style={Style.buttonText}> Scan</Text></View></TouchableOpacity>
               <TouchableOpacity style={[Style.button, {marginLeft: 5}]} onPress={() => {this.SaveInvoice()}}><View style={{flexDirection: 'row'}}><Icon name='save' size={22} color='white' /><Text style={Style.buttonText}> Save</Text></View></TouchableOpacity>

@@ -90,7 +90,7 @@ export default class App extends React.Component {
         bankAccountNumber: responseJson.bankAccountNumber,
         ocr: responseJson.ocr,
         amountToPay: responseJson.amountToPay,
-        paydate: responseJson.paydate.slice(0, 10)
+        paydate: responseJson.paydate
       })
 
       this.props.navigation.navigate('Invoice', {
@@ -101,8 +101,6 @@ export default class App extends React.Component {
         Paydate: this.state.paydate
       });
     })
-    CameraRoll.saveToCameraRoll(photo.uri, 'photo');
-    CameraRoll.saveToCameraRoll(maniPhoto.uri, 'photo');
   };
 
   render() {

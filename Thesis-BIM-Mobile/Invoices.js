@@ -23,8 +23,11 @@ export default class Invoice extends React.Component {
     catch(error) {
       console.log(error);
     }
-    fetch('https://thesis-bim-backend.azurewebsites.net/api/InvoicesApi/GetInvoices?userId=' + this.state.userId, {
-        method: 'POST',
+    console.log(this.state.userId)
+    let url = 'https://thesis-bim-backend.azurewebsites.net/api/InvoicesApi/GetInvoices?userId=' + this.state.userId;
+    console.log(url)
+    fetch(url, {
+        method: 'GET',
         headers: {
           'Content-Type': 'Application/JSON'
         },
@@ -46,12 +49,12 @@ export default class Invoice extends React.Component {
   renderItems() {
     return this.state.invoices.map(item => {
       return (
-        <View key={item.id} style={{ borderColor: 'black', borderRadius: 15, borderWidth: 1, width: 90 + '%', height: 120, marginTop: 70 }}>
+        <View key={item.id} style={{ borderColor: 'black', borderRadius: 15, borderWidth: 1, width: 90 + '%', height: 100, marginTop: 70 }}>
           <Text style={{ textAlign: 'center' }}>Company: {item.companyName}</Text>
           <Text style={{ textAlign: 'center' }}>Bankgiro: {item.bankAccountNumber}</Text>
           <Text style={{ textAlign: 'center' }}>Ocr: {item.ocr}</Text>
           <Text style={{ textAlign: 'center' }}>Belopp: {item.amountToPay}</Text>
-          <Text style={{ textAlign: 'center' }}>Förfallodatum: {item.paydate.slice(0, 10)}</Text>
+          <Text style={{ textAlign: 'center' }}>Förfallodatum: {item.paydate}</Text>
         </View>
       )
     })
